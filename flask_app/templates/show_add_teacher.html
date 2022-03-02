@@ -8,16 +8,50 @@
 </head>
 <body>
     <div>
-        <div>
-            <form action="">
-                <label for="first_name">first_name</label>
-                <input type="text" name="first_name">
-                <label for="last_name">last_name</label>
-                <input type="text" name="last_name">
-                <label for="email">email</label>
-                <input type="text" name="email">
-                <label for="password">address</label>
-                <input type="text" name="password">
+        <div class="container">
+            <form action="/add_teacher" method="post">
+    
+    
+    
+                <div class="mb-3">
+                    <label for="first_name">First name:</label>
+                    <input type="text" class="form-control" name="first_name" id="first_name">
+                    {% for message in get_flashed_messages(category_filter=['err_first_name']) %}
+                    <p class="alert alert-danger">{{message}}</p>
+                    {% endfor %}
+                </div>
+                <div class="mb-3">
+                    <label for="last_name">Last name:</label>
+                    <input type="text" class="form-control" name="last_name" id="last_name">
+                    {% for message in get_flashed_messages(category_filter=['err_last_name']) %}
+                    <p class="alert alert-danger">{{message}}</p>
+                    {% endfor %}
+                </div>
+                <div class="mb-3">
+                    <label for="email">Email:</label>
+                    <input type="email" class="form-control" name="email" id="email">
+                    {% for message in get_flashed_messages(category_filter=['err_email']) %}
+                    <p class="alert alert-danger">{{message}}</p>
+                    {% endfor %}
+                </div>
+                <div class="mb-3">
+                    <label for="password">Password:</label>
+                    <input type="password" class="form-control" name="password" id="password">
+                    {% for message in get_flashed_messages(category_filter=['err_password']) %}
+                    <p class="alert alert-danger">{{message}}</p>
+                    {% endfor %}
+                </div>
+                <div class="mb-3">
+                    <label for="confirm_password">Confirm Password:</label>
+                    <input type="password" class="form-control" name="confirm_password" id="password">
+                    {% for message in get_flashed_messages(category_filter=['err_confirm_password']) %}
+                    <p class="alert alert-danger">{{message}}</p>
+                    {% endfor %}
+                </div>
+    
+                <div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
             </form>
         </div>
         <div>

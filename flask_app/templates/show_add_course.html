@@ -9,7 +9,7 @@
 <body>
     <div>
         <div>
-            <form action="">
+            <form action="/add_course" method="post">
                 <label for="name">name</label>
                 <input type="text" name="name">
                 <label for="teacher">teacher</label>
@@ -18,8 +18,6 @@
                     <option value="{{teacher.id}}">teacher.name</option>
                     {% endfor %}
                 </select>
-            </form>
-            <form action="">
                 {% for student in students %}
                 <label for="{{student.id}}">{{student.name}}</label>
                 <input type="checkbox" name="{{student.id}}" id="{{student.id}}" value="{{student.id}}">

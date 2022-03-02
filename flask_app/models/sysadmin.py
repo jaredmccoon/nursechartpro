@@ -6,7 +6,7 @@ from flask import flash, session
 from flask_app import bcrypt, DATABASE
 
 
-class Admin:
+class Sysadmin:
     def __init__(self,data):
         self.id = data['id']
         self.first_name = data['first_name']
@@ -19,13 +19,13 @@ class Admin:
 
     @classmethod
     def save(cls,data):
-        query = "INSERT INTO admins (first_name,last_name,email,password) VALUES (%(first_name)s,%(last_name)s,%(email)s,%(password)s);"
+        query = "INSERT INTO sysadmins (first_name,last_name,email,password) VALUES (%(first_name)s,%(last_name)s,%(email)s,%(password)s);"
         some_id = connectToMySQL(DATABASE).query_db(query,data)
         return some_id
 
     @classmethod
     def get_one_by_email(cls, data:dict) -> object:
-        query = "SELECT * FROM admins WHERE email = %(email)s"
+        query = "SELECT * FROM sysadmins WHERE email = %(email)s"
         result = connectToMySQL(DATABASE).query_db(query,data)
         if result:
             return cls(result[0]) 
@@ -86,7 +86,7 @@ class Admin:
             is_valid = False
 
         else:
-            potential_user = Admin.get_one_by_email({'email': form_data['email']})
+            potential_user = Sysadmin.get_one_by_email({'email': form_data['email']})
             if not potential_user:
                 is_valid = False
                 flash("not an email", "err_login_email")

@@ -7,7 +7,7 @@ from flask_app.models.student import Student
 @app.route('/')
 def login():
     if 'admin' in session:
-        return redirect('/admin')
+        return redirect('/new_school')
     elif 'teacher' in session:
         return redirect('/teacher')
     elif  'student' in session:

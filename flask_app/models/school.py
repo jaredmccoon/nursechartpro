@@ -24,7 +24,7 @@ class School:
         return some_id
 
     @classmethod
-    def get_one(cls):
-        query = "SELECT * FROM schools WHERE admin_id = %(admin_id)s"
-        result = connectToMySQL(DATABASE).query_db(query)
+    def get_one(cls,data):
+        query = "SELECT * FROM schools WHERE id = %(id)s"
+        result = connectToMySQL(DATABASE).query_db(query,data)
         return cls(result[0])
