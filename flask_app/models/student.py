@@ -41,6 +41,12 @@ class Student:
         return cls(result[0])
 
     @classmethod
+    def get_id(cls,data):
+        query = "SELECT * FROM students WHERE email = %(email)s;"
+        some_id = connectToMySQL(DATABASE).query_db(query,data)
+        return some_id
+
+    @classmethod
     def get_one_by_email(cls, data:dict) -> object:
         query = "SELECT * FROM students WHERE email = %(email)s"
         result = connectToMySQL(DATABASE).query_db(query,data)

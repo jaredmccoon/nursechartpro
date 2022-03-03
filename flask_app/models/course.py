@@ -25,7 +25,7 @@ class Course:
 
     @classmethod
     def get_all_by_school(cls):
-        query = "SELECT * FROM courses WHERE school_id = %(school_id)s"
+        query = "SELECT * FROM courses WHERE school_id = %(id)s"
         results = connectToMySQL(DATABASE).query_db(query)
         courses = []
         for n in results:

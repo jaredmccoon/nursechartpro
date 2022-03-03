@@ -33,6 +33,12 @@ class Teacher:
         return teachers
 
     @classmethod
+    def get_id(cls,data):
+        query = "SELECT * FROM students WHERE email = %(email)s;"
+        some_id = connectToMySQL(DATABASE).query_db(query,data)
+        return some_id
+
+    @classmethod
     def get_one(cls):
         query = "SELECT * FROM teachers WHERE id = %(id)s"
         result = connectToMySQL(DATABASE).query_db(query)

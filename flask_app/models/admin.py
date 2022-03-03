@@ -24,12 +24,35 @@ class Admin:
         return some_id
 
     @classmethod
+    def get_id(cls,data):
+        query = "SELECT * FROM admins WHERE email = %(email)s;"
+        some_id = connectToMySQL(DATABASE).query_db(query,data)
+        return some_id
+
+    @classmethod
     def get_one_by_email(cls, data:dict) -> object:
         query = "SELECT * FROM admins WHERE email = %(email)s"
         result = connectToMySQL(DATABASE).query_db(query,data)
         if result:
             return cls(result[0]) 
         return False
+
+    @classmethod
+    def get_one(cls, data:dict) -> object:
+        query = "SELECT * FROM admins WHERE id = %(id)s;"
+        result = connectToMySQL(DATABASE).query_db(query,data)
+        if result:
+            return cls(result[0]) 
+        return False
+
+    @classmethod
+    def get_all(cls):
+        query = "SELECT * FROM admins"
+        results = connectToMySQL(DATABASE).query_db(query)
+        admins = []
+        for n in results:
+            admins.append( cls(n) )
+        return admins
 
     @staticmethod
     def is_valid(email):

@@ -9,11 +9,18 @@
 <body>
     <div>
         <div>
+            <a href="/new_admin">create admin</a>
             <form action="/add_school" method="post">
                 <label for="name">name</label>
                 <input type="text" name="name">
                 <label for="address">address</label>
                 <input type="text" name="address">
+                <label for="admin_id">admin</label>
+                <select name="admin_id" id="admin_id">
+                    {% for admin in admins %}
+                    <option value="{{admin.id}}">{{admin.name}}</option>
+                    {% endfor %}
+                </select>
                 <button>submit</button>
             </form>
         </div>

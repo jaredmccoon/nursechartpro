@@ -9,8 +9,6 @@ from flask_app import bcrypt, DATABASE
 class Sysadmin:
     def __init__(self,data):
         self.id = data['id']
-        self.first_name = data['first_name']
-        self.last_name = data['last_name']
         self.email = data['email']
         self.password = data['password']
         self.created_at = data['created_at']
@@ -19,7 +17,7 @@ class Sysadmin:
 
     @classmethod
     def save(cls,data):
-        query = "INSERT INTO sysadmins (first_name,last_name,email,password) VALUES (%(first_name)s,%(last_name)s,%(email)s,%(password)s);"
+        query = "INSERT INTO sysadmins (email,password) VALUES (%(email)s,%(password)s);"
         some_id = connectToMySQL(DATABASE).query_db(query,data)
         return some_id
 
@@ -30,6 +28,12 @@ class Sysadmin:
         if result:
             return cls(result[0]) 
         return False
+
+    @classmethod
+    def get_id(cls,data):
+        query = "SELECT * FROM sysadmins WHERE email = %(email)s;"
+        some_id = connectToMySQL(DATABASE).query_db(query,data)
+        return some_id
 
     @staticmethod
     def is_valid(email):

@@ -12,21 +12,17 @@
             <form action="/add_course" method="post">
                 <label for="name">name</label>
                 <input type="text" name="name">
-                <label for="teacher_id">teacher</label>
-                <select name="teacher_id" id="teacher_id">
+                <label for="teacher">teacher</label>
+                <select name="teacher" id="teacher">
                     {% for teacher in teachers %}
                     <option value="{{teacher.id}}">teacher.name</option>
                     {% endfor %}
                 </select>
                 {% for student in students %}
-                <label for="student_id">{{student.name}}</label>
-                <input type="checkbox" name="student_id" id="student_id" value="{{student.id}}">
+                <label for="{{student.id}}">{{student.name}}</label>
+                <input type="checkbox" name="{{student.id}}" id="{{student.id}}" value="{{student.id}}">
                 {% endfor %}
             </form>
-        </div>
-        <div>
-            {% for course in courses %}
-            <button><a href="">edit</a></button>
         </div>
     </div>
 </body>

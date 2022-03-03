@@ -7,6 +7,15 @@ from flask_app.models.teacher import Teacher
 from flask_app.models.student import Student
 
 
+@app.route('/admin/<int:id>')
+def student(id):
+    admin = Admin.get_one(id)
+    return render_template('admin.html', admin=admin)
+
+@app.route('/sysadmin/<int:id>')
+def student(id):
+    return render_template('sys_admin.html')
+
 @app.route('/new_admin')
 def newadmin():
     return render_template('add_admin.html')
@@ -15,52 +24,57 @@ def newadmin():
 def newadmin():
     return render_template('add_admin.html')
 
-@app.route('/new_school/<int:id>')
-def newschool(id):
-    session['admin'] = id
-    # schools = School.get_one(id)
-    return render_template('show_add_school.html')
+@app.route('/new_school')
+def newschool():
+    admins = Admin.get_all()
+    return render_template('show_add_school.html',admins=admins)
 
-@app.route('/new_course')
-def newcourse():
-    return render_template('show_add_course.html')
+@app.route('/new_course/<int:id>')
+def newcourse(id):
+    courses = Course.get_all_by_school(id)
+    teachers = Teacher.get_all_by_school(id)
+    students = Student.get_all_by_school(id)
+    return render_template('show_add_course.html', courses=courses, teachers=teachers, students=students)
 
-@app.route('/new_teacher')
-def newteacher():
-    return render_template('show_add_teacher.html')
+@app.route('/new_teacher/<int:id>')
+def newteacher(id):
+    return render_template('show_add_teacher.html', id=id)
 
-@app.route('/new_student')
-def newstudent():
-    return render_template('show_add_student.html')
+@app.route('/new_student/<int:id>')
+def newstudent(id):
+    return render_template('show_add_student.html',id=id)
 
-@app.route('/add_school/<int:id>', methods=['POST'])
-def addschool(id):
+@app.route('/add_school', methods=['POST'])
+def addschool():
+    School.save(request.form)
+    return redirect('/new_school')
+
+@app.route('/add_course/<int:id>', methods=['POST'])
+def addcourse(id):
     data = {
         **request.form,
-        'admin_id':id
+        'school_id':id
     }
-    School.save(data)
-    return redirect(f'/new_school/{id}')
+    Course.save(data)
+    return redirect(f'/new_course/{id}')
 
-@app.route('/add_course/<int:id>/<int:id>', methods=['POST'])
-def addcourse():
-    session['admin'] = id
+@app.route('/add_teacher/<int:id>', methods=['POST'])
+def addteacher(id):
     data = {
         **request.form,
-        'admin_id':id
+        'school_id':id
     }
-    Course.save(request.form)
-    return redirect('/new_course')
+    Teacher.save(data)
+    return redirect(f'/new_teacher/{id}')
 
-@app.route('/add_teacher', methods=['POST'])
-def addteacher():
-    Teacher.save(request.form)
-    return redirect('/new_teacher')
-
-@app.route('/add_student', methods=['POST'])
-def addstudent():
-    Student.save(request.form)
-    return redirect('/new_student')
+@app.route('/add_student/<int:id>', methods=['POST'])
+def addstudent(id):
+    data = {
+        **request.form,
+        'school_id':id
+    }
+    Student.save(data)
+    return redirect(f'/new_student/{id}')
 
 @app.route('/register')
 def register():
