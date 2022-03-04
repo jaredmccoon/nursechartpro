@@ -13,7 +13,7 @@ def student(id):
     return render_template('admin.html', admin=admin)
 
 @app.route('/sysadmin/<int:id>')
-def student(id):
+def studentnew():
     return render_template('sys_admin.html')
 
 @app.route('/new_admin')
@@ -21,7 +21,7 @@ def newadmin():
     return render_template('add_admin.html')
 
 @app.route('/new_admin/<int:id>')
-def newadmin():
+def adminnew():
     return render_template('add_admin.html')
 
 @app.route('/new_school')

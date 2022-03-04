@@ -26,9 +26,18 @@ class Student:
         return some_id
 
     @classmethod
-    def get_all_by_school(cls):
+    def get_all_by_school(cls,data):
         query = "SELECT * FROM students WHERE school_id = %(school_id)s"
-        results = connectToMySQL(DATABASE).query_db(query)
+        results = connectToMySQL(DATABASE).query_db(query,data)
+        students = []
+        for n in results:
+            students.append( cls(n) )
+        return students
+
+    @classmethod
+    def get_all_by_course(cls,data):
+        query = "SELECT * FROM students WHERE course_id = %(course_id)s"
+        results = connectToMySQL(DATABASE).query_db(query,data)
         students = []
         for n in results:
             students.append( cls(n) )

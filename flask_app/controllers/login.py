@@ -33,7 +33,7 @@ def adminlogin():
     return redirect(f'/sysadmin/{id}')
 
 @app.route('/admin/login')
-def adminlogin():
+def newadminlogin():
     is_valid = Admin.validator_login(request.form)
 
     if not is_valid:
